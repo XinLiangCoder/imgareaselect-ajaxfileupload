@@ -1,0 +1,92 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <title>上传头像带有裁剪的功能</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/imgareaselect-animated.css">
+        <script type="text/javascript" src="js/jquery-2.0.3.js"></script>
+        <script type="text/javascript" src="js/upload.js"></script>
+        <script type="text/javascript" src="js/jquery.ajaxfileupload.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery.imgareaselect.min.js"></script>
+    </head>
+    <body>
+    <div class="container">
+        <div style="margin-top: 10px; text-align: center; display: none;" class="alert alert-success alert-dismissible tips" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>上传成功！</strong> <a class="tips_link" target="_blank">去查看~</a>
+        </div>
+        <h2>上传头像</h2>
+        <div style="text-align: center; margin-top: 10px;">
+            <p>
+                <button type="button" class="btn btn-success btn-lg btn-block selectImg">
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                    Browse
+                </button>
+                <button type="button" id="uploadImg" class="btn btn-success btn-lg btn-block">
+                    确定
+                </button>
+            </p>
+        </div>
+        <div class="bigImg" style="float:left;margin-right:50px">
+            <img id="photo" src="images/flower.jpg">
+        </div>
+        <div class="smallImg" id="preview" style="width: 100px; height: 100px; overflow: hidden;">
+            <img id="view_photo" src="images/flower.jpg" style="width: 100px;height: 100px;">
+        </div>
+
+        <div class="input-group input-group-lg" style="margin-top: 5px;">
+            <span class="input-group-addon" id="sizing-addon1">X</span>
+            <input type="text" disabled class="form-control startX" placeholder="X" aria-describedby="sizing-addon1">
+        </div>
+        <div class="input-group input-group-lg" style="margin-top: 5px;">
+            <span class="input-group-addon" id="sizing-addon1">Y</span>
+            <input type="text" disabled class="form-control startY" placeholder="Y" aria-describedby="sizing-addon1">
+        </div>
+        <div class="input-group input-group-lg" style="margin-top: 5px;">
+            <span class="input-group-addon" id="sizing-addon1">Width</span>
+            <input type="text" disabled class="form-control width" placeholder="W" aria-describedby="sizing-addon1">
+        </div>
+        <div class="input-group input-group-lg" style="margin-top: 5px;">
+            <span class="input-group-addon" id="sizing-addon1">Height</span>
+            <input type="text" disabled class="form-control height" placeholder="H" aria-describedby="sizing-addon1">
+        </div>
+
+        <input id="upload" style="display: none;" type="file" name="file" onchange="Upload.change(this)"/>
+    </div>
+    </body>
+</html>
+<script>
+    $(function() {
+        Upload.init();
+        $(".selectImg").click(function(){
+            $("#upload").click();
+        });
+        var val = $("#upload").val();
+        $('#uploadImg').val(val);
+        $("#upload").ajaxfileupload({
+            'action': Upload.url,
+            'submit_button' : $('#uploadImg'),
+            'params': {
+                /** 传递参数 **/
+            },
+            'onComplete': function(rs) {
+                console.log('custom handler for file:'+rs.filename);
+                $('.tips').show();
+                $('.tips_link').attr('href',rs['filename']);
+            },
+            'onStart': function() {
+                //console.log('cancels upload');
+            },
+            'onCancel': function() {
+                alert('上传失败，请重试！');
+            }
+        });
+    });
+</script>
+
