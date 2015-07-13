@@ -4,7 +4,7 @@ imgareaselect + ajaxfileupload + php
 
         页面布局   (bootstrap)
 
-        上传头像，有裁剪功能 (imgareaselect) ，并且与php联调成功 (upload.php)。
+        上传头像，有裁剪功能 (imgareaselect) ajax 上传图片功能（ajaxfileupload），并且与php联调成功 (upload.php)。
 
         提交方式
 
