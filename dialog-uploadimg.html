@@ -9,15 +9,17 @@
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/imgareaselect-animated.css">
+        <link rel="stylesheet" href="artdialog/css/ui-dialog.css">
         <script type="text/javascript" src="js/jquery-2.0.3.js"></script>
         <script type="text/javascript" src="js/upload.js"></script>
         <script type="text/javascript" src="js/jquery.ajaxfileupload.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/jquery.imgareaselect.min.js"></script>
+        <script src="artdialog/js/dialog-min.js"></script>
+        <script src="artdialog/js/dialog-plus-min.js"></script>
     </head>
     <body>
     <div class="container">
-        <h2>上传头像</h2>
         <div style="text-align: center; margin-top: 10px;">
             <p>
                 <button type="button" class="btn btn-success btn-lg btn-block selectImg">
@@ -25,42 +27,40 @@
                     Browse
                 </button>
                 <button type="button" id="uploadImg" class="btn btn-success btn-lg btn-block">
+                    <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
                     确定
                 </button>
             </p>
+            <div class="bigImg" style="float:left;margin-right:50px">
+                <img id="photo">
+            </div>
         </div>
-        <div class="bigImg" style="float:left;margin-right:50px">
-            <img id="photo" src="images/flower.jpg">
-        </div>
-        <div class="smallImg" id="preview" style="width: 100px; height: 100px; overflow: hidden;">
+        <!-- 以下不显示 -->
+        <div class="smallImg" id="preview" style="width: 100px; height: 100px; overflow: hidden; display: none;">
             <img id="view_photo" src="images/flower.jpg" style="width: 100px;height: 100px;">
         </div>
 
-        <div class="input-group input-group-lg" style="margin-top: 5px;">
+        <div class="input-group input-group-lg" style="margin-top: 5px; display: none;">
             <span class="input-group-addon" >X</span>
             <input type="text" disabled class="form-control startX" placeholder="X" aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg" style="margin-top: 5px;">
+        <div class="input-group input-group-lg" style="margin-top: 5px; display: none;">
             <span class="input-group-addon" >Y</span>
             <input type="text" disabled class="form-control startY" placeholder="Y" aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg" style="margin-top: 5px;">
+        <div class="input-group input-group-lg" style="margin-top: 5px; display: none;">
             <span class="input-group-addon" >Width</span>
             <input type="text" disabled class="form-control width" placeholder="W" aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg" style="margin-top: 5px;">
+        <div class="input-group input-group-lg" style="margin-top: 5px; display: none;">
             <span class="input-group-addon" >Height</span>
             <input type="text" disabled class="form-control height" placeholder="H" aria-describedby="sizing-addon1">
         </div>
 
+        <!-- 以上不显示 -->
+
         <input id="upload" style="display: none;" type="file" name="file" onchange="Upload.change(this)"/>
 
-    </div>
-    <div class="container">
-        <div style="margin-top: 10px; text-align: center; display: none;" class="alert alert-success alert-dismissible tips" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>上传成功！</strong> <a class="tips_link" target="_blank">去查看~</a>
-        </div>
     </div>
     </body>
 </html>
@@ -80,8 +80,8 @@
             },
             'onComplete': function(rs) {
                 console.log('custom handler for file:'+rs.filename);
-                $('.tips').show();
-                $('.tips_link').attr('href',rs['filename']);
+                var dialog = top.dialog.get(window);
+                dialog.close(rs.filename).remove();
             },
             'onStart': function() {
                 //console.log('cancels upload');

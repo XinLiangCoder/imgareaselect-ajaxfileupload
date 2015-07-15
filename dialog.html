@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <title>弹窗上传图片</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="artdialog/css/ui-dialog.css">
+        <script type="text/javascript" src="js/jquery-2.0.3.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="artdialog/js/dialog-min.js"></script>
+        <script src="artdialog/js/dialog-plus-min.js"></script>
+    </head>
+    <body>
+    <div class="container">
+        <h2>上传头像</h2>
+        <div>
+            <img id="user_photo" class="img-circle" style="width: 100px;height: 100px;" src="images/flower.jpg">
+        </div>
+    </div>
+    </body>
+</html>
+<script>
+    $(function() {
+        $("#user_photo").click(function(){
+            var d = dialog({
+                url     : 'dialog-uploadimg.html',
+                title   : '选择图片',
+                onclose : function(){
+                    if (this.returnValue) {
+                        $("#user_photo").attr('src',this.returnValue+"?="+Math.random());
+                    }
+                }
+            });
+            d.width(600).height(600).showModal();
+        })
+    });
+</script>
+
